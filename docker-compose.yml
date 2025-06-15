@@ -1,0 +1,72 @@
+services:
+  postgresql: # Service name for PostgreSQL database
+    container_name: ms_pg_sql # Custom name for the container (optional, for easier reference)
+    image: postgres # Official PostgreSQL image from Docker Hub
+    environment: # Environment variables to configure PostgreSQL
+      POSTGRES_USER: alibou # Database admin username
+      POSTGRES_PASSWORD: alibou # Database admin password
+      PGDATA: /data/postgres # Directory inside the container where the database will store its data
+    volumes:
+      - postgres:/data/postgres # Mount a named volume to persist data on container restarts
+    ports:
+      - "5432:5432" # Map port 5432 of host (left) to 5432 of container (right), default PostgreSQL port
+    networks:
+      - microservices-net # Attach this container to a custom network for inter-container communication
+    restart: unless-stopped # Restart container unless explicitly stopped by the user
+
+  pgadmin: # GUI tool to manage PostgreSQL databases
+    container_name: ms_pgadmin # Custom name for the container
+    image: dpage/pgadmin4 # Official pgAdmin4 image from Docker Hub
+    environment:
+      PGADMIN_DEFAULT_EMAIL: ${PGADMIN_DEFAULT_EMAIL:-pgadmin4@pgadmin.org} # Default login email (can be set from .env)
+      PGADMIN_DEFAULT_PASSWORD: ${PGADMIN_DEFAULT_PASSWORD:-admin} # Default login password (can be set from .env)
+      PGADMIN_CONFIG_SERVER_MODE: 'False' # Disable server mode for easier local usage
+    volumes:
+      - pgadmin:/var/lib/pgadmin # Persist pgAdmin config and session data
+    ports:
+      - "5050:80" # Access pgAdmin at http://localhost:5050 (host:container)
+    networks:
+      - microservices-net # Connect to same network as PostgreSQL for internal DB access
+    restart: unless-stopped # Restart container unless explicitly stopped
+
+  mongodb: # Service for MongoDB (NoSQL database)
+    image: mongo # Official MongoDB image from Docker Hub
+    container_name: mongo_db # Custom name for the MongoDB container
+    ports:
+      - 27017:27017 # Expose MongoDB default port (27017) on host
+    volumes:
+      - mongo:/data # Persist MongoDB data to avoid losing info on container restarts
+    environment:
+      - MONGO_INITDB_ROOT_USERNAME=alibou # Admin username for MongoDB
+      - MONGO_INITDB_ROOT_PASSWORD=alibou # Admin password for MongoDB
+
+  mongo-express: # Web-based admin interface for MongoDB (similar to pgAdmin for PostgreSQL)
+    image: mongo-express # Official mongo-express image from Docker Hub
+    container_name: mongo_express # Custom name for the container
+    restart: always # Always restart if it crashes
+    ports:
+      - 8081:8081 # Access mongo-express at http://localhost:8081
+    environment:
+      - ME_CONFIG_MONGODB_ADMINUSERNAME=alibou # Same admin username as MongoDB
+      - ME_CONFIG_MONGODB_ADMINPASSWORD=alibou # Same admin password as MongoDB
+      - ME_CONFIG_MONGODB_SERVER=mongo_db # Service name of the MongoDB container to connect to
+      - ME_CONFIG_BASICAUTH_USERNAME=admin
+      - ME_CONFIG_BASICAUTH_PASSWORD=StrongSecurePassword123
+
+  mail-dev: # Lightweight SMTP server for local email testing
+    container_name: ms-mail-dev # Custom name for the container
+    image: maildev/maildev # Official MailDev image (captures outgoing emails)
+    ports:
+      - 1080:1080 # Web UI to view emails (http://localhost:1080)
+      - 1025:1025 # SMTP port your apps will send mail to (like localhost:1025)
+
+# Define custom network for microservices to communicate privately
+networks:
+  microservices-net:
+    driver: bridge # Bridge network allows inter-container communication on the same host
+
+# Named volumes for persistent data storage (across container restarts)
+volumes:
+  postgres: # Volume for PostgreSQL data
+  pgadmin:  # Volume for pgAdmin configurations
+  mongo:    # Volume for MongoDB data
