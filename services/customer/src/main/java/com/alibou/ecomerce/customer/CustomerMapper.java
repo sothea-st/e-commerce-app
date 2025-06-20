@@ -1,6 +1,7 @@
 package com.alibou.ecomerce.customer;
 
 import com.alibou.ecomerce.customer.dto.CustomerRequest;
+import com.alibou.ecomerce.customer.dto.CustomerResponse;
 import jakarta.validation.Valid;
 import org.springframework.stereotype.Service;
 
@@ -17,5 +18,15 @@ public class CustomerMapper {
                 .address(customerRequest.address())
                 .email(customerRequest.email())
                 .build();
+    }
+
+    public CustomerResponse fromCustomer(Customer customer) {
+        return new CustomerResponse(
+                customer.getId(),
+                customer.getFirstName(),
+                customer.getLastName(),
+                customer.getEmail(),
+                customer.getAddress()
+        );
     }
 }
