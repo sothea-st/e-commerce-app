@@ -7,6 +7,5 @@ spring:
       username: alibou
       password: alibou
       authentication-database: admin
-
 server:
   port: 8090
