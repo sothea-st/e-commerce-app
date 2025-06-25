@@ -8,10 +8,10 @@
 		<version>3.3.13</version>
 		<relativePath/> <!-- lookup parent from repository -->
 	</parent>
-	<groupId>com.example</groupId>
-	<artifactId>order</artifactId>
+	<groupId>com.alibou</groupId>
+	<artifactId>payment</artifactId>
 	<version>0.0.1-SNAPSHOT</version>
-	<name>order</name>
+	<name>payment</name>
 	<description>Demo project for Spring Boot</description>
 	<url/>
 	<licenses>
@@ -49,9 +49,8 @@
 		</dependency>
 		<dependency>
 			<groupId>org.springframework.cloud</groupId>
-			<artifactId>spring-cloud-starter-openfeign</artifactId>
+			<artifactId>spring-cloud-starter-netflix-eureka-client</artifactId>
 		</dependency>
-
 		<dependency>
 			<groupId>org.springframework.kafka</groupId>
 			<artifactId>spring-kafka</artifactId>
@@ -70,6 +69,11 @@
 		<dependency>
 			<groupId>org.springframework.boot</groupId>
 			<artifactId>spring-boot-starter-test</artifactId>
+			<scope>test</scope>
+		</dependency>
+		<dependency>
+			<groupId>org.springframework.kafka</groupId>
+			<artifactId>spring-kafka-test</artifactId>
 			<scope>test</scope>
 		</dependency>
 	</dependencies>
@@ -97,9 +101,6 @@
 							<artifactId>lombok</artifactId>
 						</path>
 					</annotationProcessorPaths>
-					<source>21</source>
-					<target>21</target>
-					<compilerArgs>--enable-preview</compilerArgs>
 				</configuration>
 			</plugin>
 			<plugin>

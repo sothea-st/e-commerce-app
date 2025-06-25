@@ -1,21 +1,16 @@
 package com.alibou.ecommerce.order;
 
 
-//import com.alibou.ecommerce.kafka.OrderConfirmation;
+
 import com.alibou.ecommerce.customer.CustomerClient;
 import com.alibou.ecommerce.exception.BusinessException;
-//import com.alibou.ecommerce.kafka.OrderProducer;
-//import com.alibou.ecommerce.orderline.OrderLineRequest;
-//import com.alibou.ecommerce.orderline.OrderLineService;
-//import com.alibou.ecommerce.payment.PaymentClient;
-//import com.alibou.ecommerce.payment.PaymentRequest;
-//import com.alibou.ecommerce.product.ProductClient;
-//import com.alibou.ecommerce.product.PurchaseRequest;
-//import jakarta.persistence.EntityNotFoundException;
+
+import com.alibou.ecommerce.kafka.OrderProducer;
 import com.alibou.ecommerce.orderLine.OrderLineRequest;
 import com.alibou.ecommerce.orderLine.OrderLineService;
 import com.alibou.ecommerce.product.ProductClient;
 import com.alibou.ecommerce.product.PurchaseRequest;
+import jakarta.persistence.EntityNotFoundException;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -33,7 +28,7 @@ public class OrderService {
 //    private final PaymentClient paymentClient;
     private final ProductClient productClient;
     private final OrderLineService orderLineService;
-//    private final OrderProducer orderProducer;
+    private final OrderProducer orderProducer;
 
     @Transactional
     public Integer createOrder(OrderRequest request) {
@@ -72,21 +67,20 @@ public class OrderService {
 //                        purchasedProducts
 //                )
 //        );
-//
-//        return order.getId();
-        return null;
+
+        return order.getId();
     }
 
-//    public List<OrderResponse> findAllOrders() {
-//        return this.repository.findAll()
-//                .stream()
-//                .map(this.mapper::fromOrder)
-//                .collect(Collectors.toList());
-//    }
-//
-//    public OrderResponse findById(Integer id) {
-//        return this.repository.findById(id)
-//                .map(this.mapper::fromOrder)
-//                .orElseThrow(() -> new EntityNotFoundException(String.format("No order found with the provided ID: %d", id)));
-//    }
+    public List<OrderResponse> findAllOrders() {
+        return this.repository.findAll()
+                .stream()
+                .map(this.mapper::fromOrder)
+                .collect(Collectors.toList());
+    }
+
+    public OrderResponse findById(Integer id) {
+        return this.repository.findById(id)
+                .map(this.mapper::fromOrder)
+                .orElseThrow(() -> new EntityNotFoundException(String.format("No order found with the provided ID: %d", id)));
+    }
 }
