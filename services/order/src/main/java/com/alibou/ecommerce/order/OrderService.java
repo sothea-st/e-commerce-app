@@ -1,11 +1,8 @@
 package com.alibou.ecommerce.order;
 
-
-
+import com.alibou.ecommerce.kafka.OrderConfirmation;
 import com.alibou.ecommerce.customer.CustomerClient;
 import com.alibou.ecommerce.exception.BusinessException;
-
-import com.alibou.ecommerce.kafka.OrderConfirmation;
 import com.alibou.ecommerce.kafka.OrderProducer;
 import com.alibou.ecommerce.orderLine.OrderLineRequest;
 import com.alibou.ecommerce.orderLine.OrderLineService;

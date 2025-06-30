@@ -1,11 +1,9 @@
 package com.alibou.ecommerce.order;
 
-
 import org.springframework.stereotype.Service;
 
 @Service
 public class OrderMapper {
-
 
     public Order toOrder(OrderRequest request) {
         if (request == null) {

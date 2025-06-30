@@ -1,5 +1,4 @@
 package com.alibou.ecommerce.order;
-
 import com.alibou.ecommerce.product.PurchaseRequest;
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonInclude.Include;

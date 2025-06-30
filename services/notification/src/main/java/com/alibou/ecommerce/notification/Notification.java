@@ -1,10 +1,9 @@
-package com.alibou.notification.notification;
+package com.alibou.ecommerce.notification;
 
 
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;
-import lombok.Data;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
@@ -25,6 +24,6 @@ public class Notification {
     private String id;
     private NotificationType type;
     private LocalDateTime notificationDate;
-    private com.alibou.notification.kafka.order.OrderConfirmation orderConfirmation;
-    private com.alibou.notification.kafka.payment.PaymentConfirmation paymentConfirmation;
+    private com.alibou.ecommerce.kafka.order.OrderConfirmation orderConfirmation;
+    private com.alibou.ecommerce.kafka.payment.PaymentConfirmation paymentConfirmation;
 }

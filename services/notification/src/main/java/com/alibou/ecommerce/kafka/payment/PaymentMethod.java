@@ -1,4 +1,4 @@
-package com.alibou.notification.kafka.payment;
+package com.alibou.ecommerce.kafka.payment;
 
 public enum PaymentMethod {
 

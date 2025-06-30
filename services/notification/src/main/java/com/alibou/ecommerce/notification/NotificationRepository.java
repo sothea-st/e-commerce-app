@@ -1,4 +1,4 @@
-package com.alibou.notification.notification;
+package com.alibou.ecommerce.notification;
 
 
 import org.springframework.data.mongodb.repository.MongoRepository;
