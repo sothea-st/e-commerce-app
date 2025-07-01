@@ -32,8 +32,11 @@ public class OrderService {
 
     @Transactional
     public Integer createOrder(OrderRequest request) {
+        System.out.println("request.customerId() = " + request.customerId());
         var customer = this.customerClient.findCustomerById(request.customerId())
                 .orElseThrow(() -> new BusinessException("Cannot create order:: No customer exists with the provided ID"));
+        System.out.println("reqdddddddddddddddddddddddddddddddd ");
+
 
         var purchasedProducts = productClient.purchaseProducts(request.products());
 
@@ -49,6 +52,7 @@ public class OrderService {
                     )
             );
         }
+        System.out.println("gggggggggggggggggggggg ");
         var paymentRequest = new PaymentRequest(
                 request.amount(),
                 request.paymentMethod(),
@@ -56,7 +60,9 @@ public class OrderService {
                 order.getReference(),
                 customer
         );
+        System.out.println("iiiiiiiiiiiiiiiiiiiiiiiiiii ");
         paymentClient.requestOrderPayment(paymentRequest);
+        System.out.println("1111111111111111111111111111 ");
 
         orderProducer.sendOrderConfirmation(
                 new OrderConfirmation(
