@@ -1,6 +1,5 @@
 package com.alibou.ecommerce.kafka;
 
-
 import com.alibou.ecommerce.email.EmailService;
 import com.alibou.ecommerce.kafka.order.OrderConfirmation;
 import com.alibou.ecommerce.kafka.payment.PaymentConfirmation;
